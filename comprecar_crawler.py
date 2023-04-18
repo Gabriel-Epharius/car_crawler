@@ -26,3 +26,14 @@ def get_links(page):
     return links
 
 
+def get_maxpage(url):
+    return int(get_page(url).findAll('a', {'class' : 'page-link'}, href=True)[-2].get('href').split('=')[-1])
+
+
+def get_lastpage(url='https://www.comprecar.com.br/buscar?page=', page=0):
+    last_page = get_maxpage(url + f'{page}')
+    if  last_page> page:
+        return get_lastpage(url, page=last_page)
+    else: return page
+
+
